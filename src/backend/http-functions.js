@@ -25,8 +25,7 @@ export async function post_btcpayTrxWebHook(request) {
 
   switch (req.type) {
     case "InvoiceReceivedPayment":
-    case "New":
-    case "Processing":
+    case "InvoiceProcessing":
       trx.reasonCode = 5009;
       break;
     case "InvoiceExpired":
