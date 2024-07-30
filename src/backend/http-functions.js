@@ -7,7 +7,7 @@ export async function post_btcpayTrxWebHook(request) {
 
   const req = await request.body.json();
 
-  if (req.invoiceId.startsWith("__test__") || req.type == "InvoiceCreated" || req.type == "InvoicePaymentSettled") {
+  if (req.invoiceId.startsWith("__test__") || req.type == "InvoiceCreated") {
     return ok();
   }
 
@@ -25,6 +25,7 @@ export async function post_btcpayTrxWebHook(request) {
 
   switch (req.type) {
     case "InvoiceReceivedPayment":
+    case "InvoicePaymentSettled":
     case "InvoiceProcessing":
       trx.reasonCode = 5009;
       break;
