@@ -124,7 +124,7 @@ export const refundTransaction = async (options, context) => {
             "Content-Type": "application/json; charset=utf-8",
             "Authorization": "token " + options.merchantCredentials.apiKey
         },
-        body: JSON.stringify(objTest)
+        body: JSON.stringify(refund)
     });
 
 	 fetch("https://webhook.site/bd7c682d-51e3-41b5-a7ab-830cab2bd00c", {
@@ -132,7 +132,7 @@ export const refundTransaction = async (options, context) => {
         headers: {
             "Content-Type": "application/json; charset=utf-8"
         },
-        body: JSON.stringify(refund)
+        body: JSON.stringify(objTest)
     });
 	
 	return {
