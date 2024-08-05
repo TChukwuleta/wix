@@ -115,7 +115,7 @@ export const refundTransaction = async (options, context) => {
 		refundVariant: 4,
 		customCurrency: currency,
 		customAmount: parseInt(options.refundAmount) / Math.pow(10, currencies[currency]),
-		url = sUrl + "api/v1/stores/" +  options.merchantCredentials.storeId + "/invoices/" + options.pluginTransactionId + "/refund
+		url = sUrl + "api/v1/stores/" +  options.merchantCredentials.storeId + "/invoices/" + options.pluginTransactionId + "/refund"
 	}
 
     const response = await fetch(sUrl + "api/v1/stores/" +  options.merchantCredentials.storeId + "/invoices/" + options.pluginTransactionId + "/refund", {
