@@ -20,7 +20,7 @@ export async function post_btcpayTrxWebHook(request) {
 
   var trx = {
           wixTransactionId: req.metadata.wixTxId,
-          pluginTransactionId: req.invoiceId,
+          pluginTransactionId: req.invoiceId + "|" + req.metadata.currency,
         };
 
   switch (req.type) {
