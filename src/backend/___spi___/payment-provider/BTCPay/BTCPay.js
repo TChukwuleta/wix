@@ -109,14 +109,14 @@ export const refundTransaction = async (options, context) => {
 		customAmount: parseInt(options.refundAmount) / Math.pow(10, currencies[currency]) 
 	}
 
-	const objTest = {
+	/*const objTest = {
 		name: "Wix Refund " + options.wixRefundId,
 		description: options.reason,
 		refundVariant: 4,
 		customCurrency: currency,
 		customAmount: parseInt(options.refundAmount) / Math.pow(10, currencies[currency]),
 		url: sUrl + "api/v1/stores/" +  options.merchantCredentials.storeId + "/invoices/" + options.pluginTransactionId + "/refund"
-	}
+	}*/
 
     const response = await fetch(sUrl + "api/v1/stores/" +  options.merchantCredentials.storeId + "/invoices/" + options.pluginTransactionId + "/refund", {
         method: 'post',
@@ -132,7 +132,7 @@ export const refundTransaction = async (options, context) => {
         headers: {
             "Content-Type": "application/json; charset=utf-8"
         },
-        body: JSON.stringify(objTest)
+        body: JSON.stringify(refund)
     });
 	
 	return {
