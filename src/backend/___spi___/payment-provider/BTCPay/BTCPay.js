@@ -62,8 +62,9 @@ export const createTransaction = async (options, context) => {
             buyerName: options.order.description.billingAddress.firstName + ' ' + options.order.description.billingAddress.lastName,
             orderId: options.order._id,
             wixTxId: options.wixTransactionId,
-			wixAdditionalId: options.merchantCredentials.webhookSecret,
-            itemDesc: "from Wix"
+	    wixAdditionalId: options.merchantCredentials.webhookSecret,
+            itemDesc: "from Wix",
+	    currency: options.order.description.currency
         }
     };
 
