@@ -1,9 +1,6 @@
 import * as paymentProvider from 'interfaces-psp-v1-payment-service-provider';
 import wixSiteBackend from "wix-site-backend";
 import { Permissions, webMethod } from "wix-web-module";
-import { createClient } from "@wix/sdk";
-import { site } from "@wix/site";
-import { site as wixSite } from "@wix/site-site";
 
 
 /**
@@ -103,13 +100,10 @@ export const createTransaction = async (options, context) => {
 export const refundTransaction = async (options, context) => {
     let sUrl = options.merchantCredentials.btcpayUrl;
     sUrl += sUrl.endsWith('/') ? '' : '/';
-
-	// const currency = wixSiteBackend.generalInfo.getPaymentCurrency();
-	const wixClient = createClient({
-		  host: site.host(),
-		  modules: { wixSite },
-		});
-	const currency = await wixClient.wixSite.currency();
+	
+	const tblData = options.pluginTransactionId.split("|");
+	const btcPayID = tblData[0];
+	const currency = tblData[1];
 	
 	const refund = {
 		name: "Wix Refund " + options.wixRefundId,
@@ -119,7 +113,7 @@ export const refundTransaction = async (options, context) => {
 		customAmount: parseInt(options.refundAmount) / Math.pow(10, currencies[currency]) 
 	}
 
-    const response = await fetch(sUrl + "api/v1/stores/" +  options.merchantCredentials.storeId + "/invoices/" + options.pluginTransactionId + "/refund", {
+    const response = await fetch(sUrl + "api/v1/stores/" +  options.merchantCredentials.storeId + "/invoices/" + btcPayID + "/refund", {
         method: 'post',
         headers: {
             "Content-Type": "application/json; charset=utf-8",
