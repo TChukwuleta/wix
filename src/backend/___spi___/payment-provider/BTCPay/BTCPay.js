@@ -1,6 +1,9 @@
 import * as paymentProvider from 'interfaces-psp-v1-payment-service-provider';
 import wixSiteBackend from "wix-site-backend";
 import { Permissions, webMethod } from "wix-web-module";
+import { createClient } from "@wix/sdk";
+import { site } from "@wix/site";
+import { site as wixSite } from "@wix/site-site";
 
 
 /**
@@ -100,7 +103,13 @@ export const refundTransaction = async (options, context) => {
     let sUrl = options.merchantCredentials.btcpayUrl;
     sUrl += sUrl.endsWith('/') ? '' : '/';
 
-	const currency = wixSiteBackend.generalInfo.getPaymentCurrency();
+	// const currency = wixSiteBackend.generalInfo.getPaymentCurrency();
+	const wixClient = createClient({
+		  host: site.host(),
+		  modules: { wixSite },
+		});
+	const currency = await wixClient.wixSite.currency();
+	
 	const refund = {
 		name: "Wix Refund " + options.wixRefundId,
 		description: options.reason,
