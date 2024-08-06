@@ -20,16 +20,14 @@ export async function post_btcpayTrxWebHook(request) {
   }
 
   var trx = {
-          wixTransactionId: req.metadata.wixTxId
+          wixTransactionId: req.metadata.wixTxId,
+          pluginTransactionId: req.invoiceId + "|" + req.metadata.currency
         };
 
   switch (req.type) {
     case "InvoiceReceivedPayment":
     case "InvoiceProcessing":
-      trx.reasonCode = 5009;
-      break;
     case "InvoicePaymentSettled":
-      trx.pluginTransactionId = req.invoiceId + "|" + req.metadata.currency + "|" + req.paymentMethod;
       trx.reasonCode = 5009;
       break;
     case "InvoiceExpired":
