@@ -7,7 +7,8 @@ export async function post_btcpayTrxWebHook(request) {
 
   const req = await request.body.json();
 
-  if (req.invoiceId.startsWith("__test__") || req.type == "InvoiceCreated") {
+  const validTypes = ["InvoiceProcessing", "InvoiceSettled", "InvoiceReceivedPayment", "InvoicePaymentSettled", "InvoiceExpired", "InvoiceInvalid"];
+  if (req.invoiceId.startsWith("__test__") || !validTypes.includes(req.type)) {
     return ok();
   }
 
