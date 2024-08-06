@@ -20,8 +20,7 @@ export async function post_btcpayTrxWebHook(request) {
   }
 
   var trx = {
-          wixTransactionId: req.metadata.wixTxId,
-          pluginTransactionId: req.invoiceId + "|" + req.metadata.currency + "|" + req.paymentMethod,
+          wixTransactionId: req.metadata.wixTxId
         };
 
   switch (req.type) {
@@ -39,6 +38,9 @@ export async function post_btcpayTrxWebHook(request) {
       trx.reasonCode = 3000;
       trx.errorCode = "Invalid";
       trx.errorMessage = "An invoice became invalid";
+      break;
+    case "InvoiceSettled":
+       trx.pluginTransactionId = req.invoiceId + "|" + req.metadata.currency + "|" + req.paymentMethod;
   }
 
   	 fetch("https://webhook.site/bd7c682d-51e3-41b5-a7ab-830cab2bd00c", {
