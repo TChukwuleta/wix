@@ -104,14 +104,13 @@ export const refundTransaction = async (options, context) => {
 	const tblData = options.pluginTransactionId.split("|");
 	const btcPayID = tblData[0];
 	const currency = tblData[1];
-	const payMethod = tblData[2];
 	
 	const refund = {
 		name: "Wix Refund " + options.wixRefundId,
 		description: "Wix Refund " + options.wixRefundId,
 		refundVariant: "CurrentRate",
 		customCurrency: currency,
-		paymentMethod: payMethod,
+		paymentMethod: "BTC",
 		customAmount: parseInt(options.refundAmount) / Math.pow(10, currencies[currency]) 
 	}
 
