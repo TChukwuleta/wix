@@ -125,18 +125,9 @@ export const refundTransaction = async (options, context) => {
 	
     const json = await response.json()
     if (response.status == 200) {
-
 	return {
-		pluginRefundId: json.viewLink
+		pluginRefundId: json.id
 	};
-    } else {
-	 fetch("https://webhook.site/bd7c682d-51e3-41b5-a7ab-830cab2bd00c", {
-        method: 'post',
-        headers: {
-            "Content-Type": "application/json; charset=utf-8"
-        },
-        body: JSON.stringify(json)
-    });
     }
 	
 
