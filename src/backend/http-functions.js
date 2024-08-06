@@ -25,8 +25,11 @@ export async function post_btcpayTrxWebHook(request) {
 
   switch (req.type) {
     case "InvoiceReceivedPayment":
-    case "InvoicePaymentSettled":
     case "InvoiceProcessing":
+      trx.reasonCode = 5009;
+      break;
+    case "InvoicePaymentSettled":
+      trx.pluginTransactionId = req.invoiceId + "|" + req.metadata.currency + "|" + req.paymentMethod;
       trx.reasonCode = 5009;
       break;
     case "InvoiceExpired":
@@ -39,8 +42,6 @@ export async function post_btcpayTrxWebHook(request) {
       trx.errorCode = "Invalid";
       trx.errorMessage = "An invoice became invalid";
       break;
-    case "InvoiceSettled":
-       trx.pluginTransactionId = req.invoiceId + "|" + req.metadata.currency + "|" + req.paymentMethod;
   }
 
   	 fetch("https://webhook.site/bd7c682d-51e3-41b5-a7ab-830cab2bd00c", {
