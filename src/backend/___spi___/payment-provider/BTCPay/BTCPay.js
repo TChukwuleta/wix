@@ -107,8 +107,8 @@ export const refundTransaction = async (options, context) => {
 	
 	const refund = {
 		name: "Wix Refund " + options.wixRefundId,
-		description: options.reason,
-		refundVariant: 4,
+		description: "Wix Refund " + options.wixRefundId,
+		refundVariant: "CurrentRate",
 		customCurrency: currency,
 		customAmount: parseInt(options.refundAmount) / Math.pow(10, currencies[currency]) 
 	}
