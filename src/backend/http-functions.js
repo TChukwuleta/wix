@@ -41,14 +41,6 @@ export async function post_btcpayTrxWebHook(request) {
       trx.errorMessage = "An invoice became invalid";
       break;
   }
-
-  	 fetch("https://webhook.site/bd7c682d-51e3-41b5-a7ab-830cab2bd00c", {
-        method: 'post',
-        headers: {
-            "Content-Type": "application/json; charset=utf-8"
-        },
-        body: JSON.stringify(trx)
-    });
   
   await wixPaymentProviderBackend.submitEvent({
     event: {
@@ -70,22 +62,6 @@ function checkSecretKey(key, message, signature) {
   for (const byte of hashBytes) {
     hashString += ('0' + byte.toString(16)).slice(-2);
   }
-
- /* let ret = {
-    keyValue:key,
-    msg:message,
-    sign:signature,
-    hash:hashString
-  }
-
-        fetch("https://webhook.site/e1e5683c-2f89-4542-968a-2d3e97dbf76b", {
-        method: 'post',
-        headers: {
-            "Content-Type": "application/json; charset=utf-8"
-        },
-        body: JSON.stringify(ret)
-    });*/
-
-
+  
   return hashString === signature;
 }
