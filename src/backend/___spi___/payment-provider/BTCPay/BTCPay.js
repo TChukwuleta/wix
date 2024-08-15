@@ -104,6 +104,7 @@ export const refundTransaction = async (options, context) => {
 	const tblData = options.pluginTransactionId.split("|");
 	const btcPayID = tblData[0];
 	const currency = tblData[1];
+	const emailToRefund = tblData[2];
 	
 	const refund = {
 		name: "Wix Refund " + options.wixRefundId,
@@ -123,14 +124,26 @@ export const refundTransaction = async (options, context) => {
         body: JSON.stringify(refund)
     });
 	
-    const json = await response.json()
     if (response.status == 200) {
+    	const jsonRefund = await response.json();
+	const emailRefund = {
+		email: emailToRefund,
+		subject: "Refund of your order",
+		body: ""
+	}
+	const responseEmail = await fetch(sUrl + "api/v1/stores/" +  options.merchantCredentials.storeId + "/invoices/email/send", {
+	        method: 'post',
+	        headers: {
+	            "Content-Type": "application/json; charset=utf-8",
+	            "Authorization": "token " + options.merchantCredentials.apiKey
+	        },
+	        body: JSON.stringify(emailRefund)
+	    });	
+	
 	return {
-		pluginRefundId: json.id
+		pluginRefundId: jsonRefund.id
 	};
     }
-	
-
 };
 
 const currencies = {
