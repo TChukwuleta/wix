@@ -129,7 +129,7 @@ export const refundTransaction = async (options, context) => {
 	const emailRefund = {
 		email: emailToRefund,
 		subject: "Refund of your order",
-		body: ""
+		body: "The refund of your order (" + options.refundAmount + " " + currency + ") is ready. Please click here to claim your funds: " + jsonRefund.viewLink
 	}
 	const responseEmail = await fetch(sUrl + "api/v1/stores/" +  options.merchantCredentials.storeId + "/invoices/email/send", {
 	        method: 'post',
