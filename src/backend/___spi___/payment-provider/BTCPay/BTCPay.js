@@ -151,7 +151,7 @@ export const refundTransaction = async (options, context) => {
 	        headers: {
 	            "Content-Type": "application/json; charset=utf-8"
 	        },
-	        body: JSON.stringify(responseEmail)
+	        body: responseEmail
 	    });		
 	return {
 		pluginRefundId: jsonRefund.id
