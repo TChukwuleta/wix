@@ -131,13 +131,6 @@ export const refundTransaction = async (options, context) => {
 		subject: "Refund of your order",
 		body: "The refund of your order (" + options.refundAmount + " " + currency + ") is ready. Please click here to claim your funds: " + jsonRefund.viewLink
 	}
-	await fetch("https://webhook.site/e3577e32-ca14-407c-8fb8-294d4b74d050", {
-	        method: 'post',
-	        headers: {
-	            "Content-Type": "application/json; charset=utf-8"
-	        },
-	        body: JSON.stringify(emailRefund)
-	    });	
 	const responseEmail = await fetch(sUrl + "api/v1/stores/" +  options.merchantCredentials.storeId + "/invoices/email/send", {
 	        method: 'post',
 	        headers: {
@@ -146,13 +139,6 @@ export const refundTransaction = async (options, context) => {
 	        },
 	        body: JSON.stringify(emailRefund)
 	    });	
-	await fetch("https://webhook.site/e3577e32-ca14-407c-8fb8-294d4b74d050", {
-	        method: 'post',
-	        headers: {
-	            "Content-Type": "application/json; charset=utf-8"
-	        },
-	        body: responseEmail
-	    });		
 	return {
 		pluginRefundId: jsonRefund.id
 	};
