@@ -7,7 +7,7 @@ return {
   paymentMethods: [{
     hostedPage: {
       title: 'Bitcoin Payments with BTCPay',
-      billingAddressMandatoryFields: [],
+      billingAddressMandatoryFields: ['EMAIL'],
       logos: {
         white: {
           svg: 'https://logosandtypes.com/wp-content/uploads/2024/02/btcpay.svg',
