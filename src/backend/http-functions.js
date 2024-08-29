@@ -3,6 +3,7 @@ import { ok, badRequest } from "wix-http-functions";
 import { createHmac } from 'crypto';
 import { Permissions, webMethod } from "wix-web-module";
 import { orders } from "wix-ecom-backend";
+import { elevate } from "wix-auth";
 
 // An endpoint for receiving updates about transactions.
 export async function post_btcpayTrxWebHook(request) {
