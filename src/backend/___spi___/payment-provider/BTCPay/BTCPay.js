@@ -144,7 +144,7 @@ export const refundTransaction = async (options, context) => {
 		//order.buyerInfo.email
 		const emailRefund = {
 			email: "infos@nisaba.solutions",
-			subject: "Refund of your order",
+			subject: "Refund of your order " + jsonRefund.metadata.orderId,
 			body: "The refund of your order (" + options.refundAmount + " " + currency + ") is ready. Please click here to claim your funds: " + jsonRefund.viewLink
 		}
 		const responseEmail = await fetch(sUrl + "api/v1/stores/" +  options.merchantCredentials.storeId + "/email/send", {
