@@ -1,6 +1,7 @@
 import wixPaymentProviderBackend from "wix-payment-provider-backend";
 import { ok, badRequest } from "wix-http-functions";
 import { createHmac } from 'crypto';
+import { getOrder } from 'wix-stores-backend';
 
 // An endpoint for receiving updates about transactions.
 export async function post_btcpayTrxWebHook(request) {
