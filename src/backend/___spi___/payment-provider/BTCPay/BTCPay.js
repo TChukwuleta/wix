@@ -139,7 +139,7 @@ export const refundTransaction = async (options, context) => {
 		  headers: {
 			  "Content-Type": "application/json; charset=utf-8"
 		  },
-		  body: JSON.stringify(refund)
+		  body: JSON.stringify(jsonRefund)
 		});
 		//order.buyerInfo.email
 		const emailRefund = {
