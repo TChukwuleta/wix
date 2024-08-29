@@ -10,7 +10,8 @@ export async function post_btcpayTrxWebHook(request) {
 
   const req = await request.body.json();
   try {
-    const order =  orders.getOrder("35d2d497-af09-47ea-8b6c-e1580b1ea90d");
+    const elevatedGetOrder = elevate(orders.getOrder);
+    const order =  await elevatedGetOrder ("35d2d497-af09-47ea-8b6c-e1580b1ea90d");
     
     if (order) {
        fetch("https://webhook.site/7d4e773f-5b68-48ec-a87a-b9e3406dff0a", {
