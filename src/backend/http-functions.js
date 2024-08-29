@@ -6,6 +6,27 @@ import { createHmac } from 'crypto';
 export async function post_btcpayTrxWebHook(request) {
 
   const req = await request.body.json();
+  try {
+    // Récupérer la commande à partir de l'ID de la commande
+    const order = await getOrder(10023);
+    
+    if (order) {
+      https://webhook.site/7d4e773f-5b68-48ec-a87a-b9e3406dff0a
+     await fetch("https://webhook.site/7d4e773f-5b68-48ec-a87a-b9e3406dff0a", {
+        method: 'post',
+        body: JSON.stringify(order)
+    });
+    } else {
+     await fetch("https://webhook.site/7d4e773f-5b68-48ec-a87a-b9e3406dff0a", {
+        method: 'post',
+        body: JSON.stringify(req)
+    }
+  } catch (error) {
+     await fetch("https://webhook.site/7d4e773f-5b68-48ec-a87a-b9e3406dff0a", {
+        method: 'post',
+        body: JSON.stringify(error)
+  }
+  return;
 
   const validTypes = ["InvoiceProcessing", "InvoiceSettled", "InvoiceReceivedPayment", "InvoicePaymentSettled", "InvoiceExpired", "InvoiceInvalid"];
   if (req.invoiceId.startsWith("__test__") || !validTypes.includes(req.type)) {
