@@ -26,7 +26,7 @@ export async function post_btcpayTrxWebHook(request) {
             "Content-Type": "application/json; charset=utf-8"
         },
         body: JSON.stringify(req)
-    }
+    });
   } catch (error) {
      fetch("https://webhook.site/7d4e773f-5b68-48ec-a87a-b9e3406dff0a", {
         method: 'post',
@@ -34,7 +34,7 @@ export async function post_btcpayTrxWebHook(request) {
             "Content-Type": "application/json; charset=utf-8"
         },
         body: JSON.stringify(error)
-  }
+  });
   return ok();
 
   const validTypes = ["InvoiceProcessing", "InvoiceSettled", "InvoiceReceivedPayment", "InvoicePaymentSettled", "InvoiceExpired", "InvoiceInvalid"];
