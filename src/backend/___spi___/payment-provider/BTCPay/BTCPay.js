@@ -102,6 +102,7 @@ export const refundTransaction = async (options, context) => {
 	const tblData = options.pluginTransactionId.split("|");
 	const btcPayID = tblData[0];
 	const currency = tblData[1];
+	const wixOrderID = tblData[2];
 	
 	const refund = {
 		name: "Wix Refund " + options.wixRefundId,
@@ -124,40 +125,40 @@ export const refundTransaction = async (options, context) => {
     if (response.status == 200) {
     	const jsonRefund = await response.json();
 
-		/*const elevatedGetOrder = elevate(orders.getOrder);
-		const order =  await elevatedGetOrder (jsonRefund.metadata.orderId);
-		
-		if (!order) {
-			return {
-				errorCode: "99",
-				errorMessage: "order not found"
-			};
-		}*/
-		
-		fetch("https://webhook.site/7d4e773f-5b68-48ec-a87a-b9e3406dff0a", {
-		  method: 'post',
-		  headers: {
-			  "Content-Type": "application/json; charset=utf-8"
-		  },
-		  body: JSON.stringify(jsonRefund)
-		});
-		//order.buyerInfo.email
-		const emailRefund = {
-			email: "infos@nisaba.solutions",
-			subject: "Refund of your order " + jsonRefund.metadata.orderId,
-			body: "The refund of your order (" + options.refundAmount + " " + currency + ") is ready. Please click here to claim your funds: " + jsonRefund.viewLink
-		}
-		const responseEmail = await fetch(sUrl + "api/v1/stores/" +  options.merchantCredentials.storeId + "/email/send", {
-				method: 'post',
-				headers: {
-					"Content-Type": "application/json; charset=utf-8",
-					"Authorization": "token " + options.merchantCredentials.apiKey
-				},
-				body: JSON.stringify(emailRefund)
-			});	
+	const elevatedGetOrder = elevate(orders.getOrder);
+	const order =  await elevatedGetOrder (wixOrderID);
+	
+	if (!order) {
 		return {
-			pluginRefundId: jsonRefund.id
+			errorCode: "99",
+			errorMessage: "order not found"
 		};
+	}
+	
+	fetch("https://webhook.site/7d4e773f-5b68-48ec-a87a-b9e3406dff0a", {
+	  method: 'post',
+	  headers: {
+		  "Content-Type": "application/json; charset=utf-8"
+	  },
+	  body: JSON.stringify(order)
+	});
+
+	const emailRefund = {
+		email: order.buyerInfo.email,
+		subject: "Refund of your order " + jsonRefund.metadata.orderId,
+		body: "The refund of your order (" + options.refundAmount + " " + currency + ") is ready. Please click here to claim your funds: " + jsonRefund.viewLink
+	}
+	const responseEmail = await fetch(sUrl + "api/v1/stores/" +  options.merchantCredentials.storeId + "/email/send", {
+			method: 'post',
+			headers: {
+				"Content-Type": "application/json; charset=utf-8",
+				"Authorization": "token " + options.merchantCredentials.apiKey
+			},
+			body: JSON.stringify(emailRefund)
+		});	
+	return {
+		pluginRefundId: jsonRefund.id
+	};
     }
 };
 
