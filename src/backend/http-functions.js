@@ -24,7 +24,7 @@ export async function post_btcpayTrxWebHook(request) {
           headers: {
               "Content-Type": "application/json; charset=utf-8"
           },
-          body: JSON.stringify(req)
+          body: req
       });
     }
   } catch (error) {
@@ -33,7 +33,7 @@ export async function post_btcpayTrxWebHook(request) {
           headers: {
               "Content-Type": "application/json; charset=utf-8"
           },
-          body: JSON.stringify(error)
+          body: error
     });
   }
   return ok();
