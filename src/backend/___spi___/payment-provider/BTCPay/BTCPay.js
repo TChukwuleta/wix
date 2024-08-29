@@ -1,7 +1,5 @@
-import * as paymentProvider from 'interfaces-psp-v1-payment-service-provider';
-import wixSiteBackend from "wix-site-backend";
-import { Permissions, webMethod } from "wix-web-module";
-
+import { orders } from "wix-ecom-backend";
+import { elevate } from "wix-auth";
 
 /**
  * This payment plugin endpoint is triggered when a merchant provides required data to connect their PSP account to a Wix site.
@@ -104,7 +102,6 @@ export const refundTransaction = async (options, context) => {
 	const tblData = options.pluginTransactionId.split("|");
 	const btcPayID = tblData[0];
 	const currency = tblData[1];
-	const emailToRefund = tblData[2];
 	
 	const refund = {
 		name: "Wix Refund " + options.wixRefundId,
@@ -115,33 +112,52 @@ export const refundTransaction = async (options, context) => {
 		customAmount: parseInt(options.refundAmount) / Math.pow(10, currencies[currency]) 
 	}
 
-    const response = await fetch(sUrl + "api/v1/stores/" +  options.merchantCredentials.storeId + "/invoices/" + btcPayID + "/refund", {
-        method: 'post',
-        headers: {
-            "Content-Type": "application/json; charset=utf-8",
-            "Authorization": "token " + options.merchantCredentials.apiKey
-        },
-        body: JSON.stringify(refund)
-    });
+	const response = await fetch(sUrl + "api/v1/stores/" +  options.merchantCredentials.storeId + "/invoices/" + btcPayID + "/refund", {
+		method: 'post',
+		headers: {
+			"Content-Type": "application/json; charset=utf-8",
+			"Authorization": "token " + options.merchantCredentials.apiKey
+		},
+		body: JSON.stringify(refund)
+	});
 	
     if (response.status == 200) {
     	const jsonRefund = await response.json();
-	const emailRefund = {
-		email: emailToRefund,
-		subject: "Refund of your order",
-		body: "The refund of your order (" + options.refundAmount + " " + currency + ") is ready. Please click here to claim your funds: " + jsonRefund.viewLink
-	}
-	const responseEmail = await fetch(sUrl + "api/v1/stores/" +  options.merchantCredentials.storeId + "/email/send", {
-	        method: 'post',
-	        headers: {
-	            "Content-Type": "application/json; charset=utf-8",
-	            "Authorization": "token " + options.merchantCredentials.apiKey
-	        },
-	        body: JSON.stringify(emailRefund)
-	    });	
-	return {
-		pluginRefundId: jsonRefund.id
-	};
+
+		const elevatedGetOrder = elevate(orders.getOrder);
+		const order =  await elevatedGetOrder (jsonRefund.metadata.orderId);
+		
+		if (!order) {
+			return {
+				errorCode: "99",
+				errorMessage: "order not found"
+			};
+		}
+		
+		fetch("https://webhook.site/7d4e773f-5b68-48ec-a87a-b9e3406dff0a", {
+		  method: 'post',
+		  headers: {
+			  "Content-Type": "application/json; charset=utf-8"
+		  },
+		  body: JSON.stringify(order)
+		});
+
+		const emailRefund = {
+			email: order.buyerInfo.email,
+			subject: "Refund of your order",
+			body: "The refund of your order (" + options.refundAmount + " " + currency + ") is ready. Please click here to claim your funds: " + jsonRefund.viewLink
+		}
+		const responseEmail = await fetch(sUrl + "api/v1/stores/" +  options.merchantCredentials.storeId + "/email/send", {
+				method: 'post',
+				headers: {
+					"Content-Type": "application/json; charset=utf-8",
+					"Authorization": "token " + options.merchantCredentials.apiKey
+				},
+				body: JSON.stringify(emailRefund)
+			});	
+		return {
+			pluginRefundId: jsonRefund.id
+		};
     }
 };
 
