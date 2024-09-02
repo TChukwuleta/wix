@@ -102,7 +102,7 @@ export const refundTransaction = async (options, context) => {
 	const tblData = options.pluginTransactionId.split("|");
 	const btcPayID = tblData[0];
 	const currency = tblData[1];
-	const wixOrderID = tblData[2];
+	//const wixOrderID = tblData[2];
 	
 	const refund = {
 		name: "Wix Refund " + options.wixRefundId,
@@ -125,7 +125,7 @@ export const refundTransaction = async (options, context) => {
     if (response.status == 200) {
     	const jsonRefund = await response.json();
 
-	const elevatedGetOrder = elevate(orders.getOrder);
+	/* const elevatedGetOrder = elevate(orders.getOrder);
 	const order =  await elevatedGetOrder (wixOrderID);
 	
 	if (!order) {
@@ -134,14 +134,6 @@ export const refundTransaction = async (options, context) => {
 			errorMessage: "order not found"
 		};
 	}
-	
-	fetch("https://webhook.site/7d4e773f-5b68-48ec-a87a-b9e3406dff0a", {
-	  method: 'post',
-	  headers: {
-		  "Content-Type": "application/json; charset=utf-8"
-	  },
-	  body: JSON.stringify(order)
-	});
 
 	const emailRefund = {
 		email: order.buyerInfo.email,
@@ -155,7 +147,7 @@ export const refundTransaction = async (options, context) => {
 				"Authorization": "token " + options.merchantCredentials.apiKey
 			},
 			body: JSON.stringify(emailRefund)
-		});	
+		});	*/
 	return {
 		pluginRefundId: jsonRefund.id
 	};
