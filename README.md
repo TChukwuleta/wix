@@ -13,16 +13,16 @@ This guide will show you how you can enable Bitcoin payments using BTCPay Server
 ## Create a payment service provider plugin (PSPP) 
 
 1. In your Wix site, open your Wix Editor.
-2. At the top click on "Dev Mode" and the "Turn on Dev Mode" button to enable the developer mode.
+2. At the top click on "**Dev Mode**" and the "**Turn on Dev Mode**" button to enable the developer mode.
 ![Dev Mode](./docs/images/01_wix_dev-mode.png)
 3. Now on the left side, click on the `{ }` icon to open the code editor.
-4. In the section "Service Plugins" click on the (+) sign and select "Payment"
+4. In the section "Service Plugins" click on the **(+)** sign and select "**Payment**"
 ![Add payment provider service plugin](./docs/images/02_wix_service-plugin-payment.png)
-5. On the following screen, click "Start now"
+5. On the following screen, click "**Start now**"
 ![Start now](./docs/images/03_wix_ppsp-start-now.png)
-6. On the legal terms page, check the terms and click "Accept"
+6. On the legal terms page, check the terms and click "**Accept**"
 ![Accept terms](./docs/images/04_wix_ppsp-legal-notice.png)
-7. Now enter the name of the plugin: "BTCPay" (you can use any name but this will make it easier to follow the guide). Then, click "Add & Edit Code":
+7. Now enter the name of the plugin: "**BTCPay**" (you can use any name but this will make it easier to follow the guide). Then, click "Add & Edit Code":
 ![Add & Edit Code](./docs/images/05_wix_ppsp-name.png)
 8. This created the directory "BTCPay" containing two files: `BTCPay.js` and `BTCPay-config.js` which is open in the editor. 
 ![BTCPay-config.js](./docs/images/06_wix_ppsp-btcpay-config.png)
@@ -33,9 +33,9 @@ This guide will show you how you can enable Bitcoin payments using BTCPay Server
 11. Now, open the `BTCPay.js` file in the wix editor and paste the code from our Git repository: [BTCPay.js](https://github.com/btcpayserver/wix/blob/main/backend/service-plugins/payment-provider/BTCPay/BTCPay.js). Do not forget to remove all the example code from the file before pasting the copied code.
 ![BTCPay.js](./docs/images/09_wix_gh-btcpay.png)
 ![BTCPay.js](./docs/images/10_wix_ppsp-btcpay.png)
-12. Now we need to add the `http-functions.js` file to the `backend` directory. To do so, in the "backend" section of your editor click again on the (+) icon and select "Expose Site API" which creates the mentioned `http-functions.js` file. Note: If you already have that file present then you can skip this step.
+12. Now we need to add the `http-functions.js` file to the `backend` directory. To do so, in the "backend" section of your editor click again on the **(+)** icon and select "**Expose Site API**" which creates the mentioned `http-functions.js` file. Note: If you already have that file present then you can skip this step.
 ![Create http-functions.js](./docs/images/11_wix_backend-expose-site-api.png)
-13. Copy the code from our Git repository: [http-functions.js](https://github.com/btcpayserver/wix/blob/main/backend/http-functions.js). If you already had a http-functions.js file, make sure to add the code from the Git repository to the existing file add the copied code below the existing code. If not then make sure you delete all the example code before pasting the code from Github.
+13. Copy the code from our Git repository: [http-functions.js](https://github.com/btcpayserver/wix/blob/main/backend/http-functions.js). If you already had a `http-functions.js` file, make sure to add the code from the Git repository to the existing file add the copied code below the existing code. If not then make sure you delete all the example code before pasting the code from GitHub.
 ![http-functions.js](./docs/images/12_wix_backend-http-functions.png)
 14. Now the code is done it is important to click on publish to save the changes and make the plugin available.
 
