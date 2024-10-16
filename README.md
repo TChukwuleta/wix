@@ -10,7 +10,7 @@ This guide will show you how you can enable Bitcoin payments using BTCPay Server
 - [You've a BTCPay store on the instance](https://docs.btcpayserver.org/CreateStore/)
 - [You've a wallet connected to your store](https://docs.btcpayserver.org/WalletSetup/) and/or [Lightning Network](https://docs.btcpayserver.org/LightningNetwork/) enabled or connected.
 
-## Create a payment service provider plugin (PSPP) 
+## Create a payment provider service plugin (PPSP) 
 
 1. In your Wix site, open your Wix Editor.
 2. At the top click on "**Dev Mode**" and the "**Turn on Dev Mode**" button to enable the developer mode.
@@ -26,7 +26,7 @@ This guide will show you how you can enable Bitcoin payments using BTCPay Server
 ![Add & Edit Code](./docs/images/05_wix_ppsp-name.png)
 8. This created the directory "BTCPay" containing two files: `BTCPay.js` and `BTCPay-config.js` which is open in the editor. 
 ![BTCPay-config.js](./docs/images/06_wix_ppsp-btcpay-config.png)
-9. Next steps are to copy the contents of those two files from our [Git repository](https://github.com/btcpayserver/wix). You can see the same data structure as on your wix editor. In the `BTCPay-config.js` file, paste the code from the same file on our Git repository: [BTCPay-config.js](https://github.com/btcpayserver/wix/blob/main/backend/service-plugins/payment-provider/BTCPay/BTCPay-config.js). Easiest to click the "Copy raw file" icon. 
+9. Next steps are to copy the contents of those two files from our [Git repository](https://github.com/btcpayserver/wix). You can see the same data structure as on your wix editor. In the `BTCPay-config.js` file, paste the code from the same file on our Git repository: [BTCPay-config.js](https://github.com/btcpayserver/wix/blob/main/backend/service-plugins/payment-provider/BTCPay/BTCPay-config.js). Easiest to click the "**Copy raw file**" icon. 
 ![BTCPay-config.js](./docs/images/07_wix_gh-btcpay-config.png)
 10. Make sure you delete example code on the `BTCPay-config.js` file in the wix editor before pasting the new code.
 ![BTCPay-config.js completed](./docs/images/08_wix_ppsp-btcpay-config-complete.png)
