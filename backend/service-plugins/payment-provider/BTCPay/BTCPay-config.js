@@ -23,7 +23,7 @@ return {
   credentialsFields: [{
     simpleField: {
       name: 'btcpayUrl',
-      label: 'BTCPay Url'
+      label: 'BTCPay Server Url'
     }
   }, 
   {
